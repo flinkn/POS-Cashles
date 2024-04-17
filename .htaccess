@@ -1,0 +1,30 @@
+RewriteEngine on
+#views
+RewriteRule ^/?$ /fatawu/index.php
+RewriteRule ^/?dashboard$ /fatawu/view/admin/dashboard.php
+RewriteRule ^/?items$ /fatawu/view/admin/items.php
+RewriteRule ^/?stock$ /fatawu/view/admin/stocks.php
+RewriteRule ^/?sell$ /fatawu/view/admin/sell.php
+RewriteRule ^/?doss$ /fatawu/view/admin/doss.php
+RewriteRule ^/?all-sales$ /fatawu/view/admin/sales.php
+RewriteRule ^/?users$ /fatawu/view/admin/users.php
+RewriteRule ^/?user-activities$ /fatawu/view/admin/activity.php
+RewriteRule ^/?report/stock$ /fatawu/view/admin/stockreport.php
+RewriteRule ^/report/sales$ /fatawu/view/admin/salesreport.php
+RewriteRule ^/?report/item-list$ /fatawu/view/admin/itemreport.php
+
+# controller
+RewriteRule ^/?auth$ /fatawu/controller/actions/login.php
+RewriteRule ^/?fetch/list$ /fatawu/controller/actions/list.php
+RewriteRule ^/?logout$ /fatawu/controller/actions/logout.php
+RewriteRule ^/?goods/items$ /fatawu/controller/actions/item.php
+RewriteRule ^/?goods/items/([0-9]+)$ /fatawu/controller/actions/item.php?item_id=$1
+RewriteRule ^/?goods/items/([0-9]+)/([0-9]+)$ /fatawu/controller/actions/item.php?id=$1&state=$2
+RewriteRule ^/?goods/sales$ /fatawu/controller/actions/create_sales.php
+RewriteRule ^/?goods/sales/remove/([0-9]+)$ /fatawu/controller/actions/create_sales.php?itemcode=$1
+RewriteRule ^/?goods/sales/([0-9]+)$ /fatawu/controller/actions/create_sales.php?itemid=$1
+#RewriteRule ^/?goods/sales/print/([a-zA-Z0-9]+)$ /fatawu/controller/actions/create_sales.php?print_itemid=$1
+RewriteRule ^/?authorize/user$ /fatawu/controller/actions/user.php
+RewriteRule ^/?authorize/user/([0-9]+)/([0-9]+)$ /fatawu/controller/actions/user.php?id=$1&state=$2
+RewriteRule ^/?dashboard/stat/graph/([0-9]+)$ /fatawu/controller/actions/graph.php?graphdaily=$1
+RewriteRule ^/?dashboard/stat/activities/([0-9]+)$ /fatawu/controller/actions/graph.php?activities=$1
