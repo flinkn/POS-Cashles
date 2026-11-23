@@ -1,30 +1,58 @@
-RewriteEngine on
-#views
-RewriteRule ^/?$ /fatawu/index.php
-RewriteRule ^/?dashboard$ /fatawu/view/admin/dashboard.php
-RewriteRule ^/?items$ /fatawu/view/admin/items.php
-RewriteRule ^/?stock$ /fatawu/view/admin/stocks.php
-RewriteRule ^/?sell$ /fatawu/view/admin/sell.php
-RewriteRule ^/?doss$ /fatawu/view/admin/doss.php
-RewriteRule ^/?all-sales$ /fatawu/view/admin/sales.php
-RewriteRule ^/?users$ /fatawu/view/admin/users.php
-RewriteRule ^/?user-activities$ /fatawu/view/admin/activity.php
-RewriteRule ^/?report/stock$ /fatawu/view/admin/stockreport.php
-RewriteRule ^/report/sales$ /fatawu/view/admin/salesreport.php
-RewriteRule ^/?report/item-list$ /fatawu/view/admin/itemreport.php
+RewriteEngine On
 
-# controller
-RewriteRule ^/?auth$ /fatawu/controller/actions/login.php
-RewriteRule ^/?fetch/list$ /fatawu/controller/actions/list.php
-RewriteRule ^/?logout$ /fatawu/controller/actions/logout.php
-RewriteRule ^/?goods/items$ /fatawu/controller/actions/item.php
-RewriteRule ^/?goods/items/([0-9]+)$ /fatawu/controller/actions/item.php?item_id=$1
-RewriteRule ^/?goods/items/([0-9]+)/([0-9]+)$ /fatawu/controller/actions/item.php?id=$1&state=$2
-RewriteRule ^/?goods/sales$ /fatawu/controller/actions/create_sales.php
-RewriteRule ^/?goods/sales/remove/([0-9]+)$ /fatawu/controller/actions/create_sales.php?itemcode=$1
-RewriteRule ^/?goods/sales/([0-9]+)$ /fatawu/controller/actions/create_sales.php?itemid=$1
-#RewriteRule ^/?goods/sales/print/([a-zA-Z0-9]+)$ /fatawu/controller/actions/create_sales.php?print_itemid=$1
-RewriteRule ^/?authorize/user$ /fatawu/controller/actions/user.php
-RewriteRule ^/?authorize/user/([0-9]+)/([0-9]+)$ /fatawu/controller/actions/user.php?id=$1&state=$2
-RewriteRule ^/?dashboard/stat/graph/([0-9]+)$ /fatawu/controller/actions/graph.php?graphdaily=$1
-RewriteRule ^/?dashboard/stat/activities/([0-9]+)$ /fatawu/controller/actions/graph.php?activities=$1
+# Do not expose version-control or environment files
+<FilesMatch "(^|/)(\.git|\.env|composer\.json|composer\.lock)">
+  Require all denied
+</FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# Compress text assets
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json application/xml
+</IfModule>
+
+# Cache immutable static assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Application routes. Update the /fatawu base to match the deployment directory.
+RewriteRule ^/?$ index.php [L]
+RewriteRule ^/?dashboard$ fatawu/view/admin/dashboard.php [L]
+RewriteRule ^/?items$ fatawu/view/admin/items.php [L]
+RewriteRule ^/?stock$ fatawu/view/admin/stocks.php [L]
+RewriteRule ^/?sell$ fatawu/view/admin/sell.php [L]
+RewriteRule ^/?doss$ fatawu/view/admin/doss.php [L]
+RewriteRule ^/?all-sales$ fatawu/view/admin/sales.php [L]
+RewriteRule ^/?users$ fatawu/view/admin/users.php [L]
+RewriteRule ^/?user-activities$ fatawu/view/admin/activity.php [L]
+RewriteRule ^/?report/stock$ fatawu/view/admin/stockreport.php [L]
+RewriteRule ^/?report/sales$ fatawu/view/admin/salesreport.php [L]
+RewriteRule ^/?report/item-list$ fatawu/view/admin/itemreport.php [L]
+
+RewriteRule ^/?auth$ fatawu/controller/actions/login.php [L]
+RewriteRule ^/?fetch/list$ fatawu/controller/actions/list.php [L]
+RewriteRule ^/?logout$ fatawu/controller/actions/logout.php [L]
+RewriteRule ^/?goods/items$ fatawu/controller/actions/item.php [L]
+RewriteRule ^/?goods/items/([0-9]+)$ fatawu/controller/actions/item.php?item_id=$1 [L]
+RewriteRule ^/?goods/items/([0-9]+)/([0-9]+)$ fatawu/controller/actions/item.php?id=$1&state=$2 [L]
+RewriteRule ^/?goods/sales$ fatawu/controller/actions/create_sales.php [L]
+RewriteRule ^/?goods/sales/remove/([0-9]+)$ fatawu/controller/actions/create_sales.php?itemcode=$1 [L]
+RewriteRule ^/?goods/sales/([0-9]+)$ fatawu/controller/actions/create_sales.php?itemid=$1 [L]
+RewriteRule ^/?authorize/user$ fatawu/controller/actions/user.php [L]
+RewriteRule ^/?authorize/user/([0-9]+)/([0-9]+)$ fatawu/controller/actions/user.php?id=$1&state=$2 [L]
+RewriteRule ^/?dashboard/stat/graph/([0-9]+)$ fatawu/controller/actions/graph.php?graphdaily=$1 [L]
+RewriteRule ^/?dashboard/stat/activities/([0-9]+)$ fatawu/controller/actions/graph.php?activities=$1 [L]
