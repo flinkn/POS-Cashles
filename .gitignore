@@ -1,28 +1,29 @@
-# Composer and PHP dependencies
+# PHP and PHPUnit
 /vendor/
+/.phpunit.cache/
+.phpunit.result.cache
+
+# Local environment and credentials
 /.env
 .env.*
+/config/app.php
+/config/database.php
+/config.php
+*.pem
+*.key
 
 # Runtime files
 /logs/
 /tmp/
 /sessions/
+/cache/
 *.log
 
-# Uploads and generated files
+# Uploads and generated private files
 /uploads/private/
-/cache/
 
 # IDE and operating system files
-.idea/
-.vscode/
+/.idea/
+/.vscode/
 .DS_Store
 Thumbs.db
-
-# Credentials and local configuration
-config/app.php
-config/database.php
-app/Config/database.php
-app/Config/core.php
-*.pem
-*.key
